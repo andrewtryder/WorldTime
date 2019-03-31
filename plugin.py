@@ -95,8 +95,9 @@ class WorldTime(callbacks.Plugin):
     ##############
 
     def _getlatlng(self, location):
+        api_key = self.registryValue('mapsAPIkey')
         location = quote_plus(location)
-        url = 'http://maps.googleapis.com/maps/api/geocode/json?address=%s&sensor=false' % location
+        url = 'https://maps.googleapis.com/maps/api/geocode/json?address=%s&sensor=false&key=%s' % (location, api_key)
 
         # try and fetch url
         try:
@@ -119,8 +120,9 @@ class WorldTime(callbacks.Plugin):
             self.log.info("ERROR: _getlatlng: {0}".format(e))
 
     def _gettime(self, latlng):
+        api_key = self.registryValue('mapsAPIkey')
         latlng = quote_plus(latlng)
-        url = 'https://maps.googleapis.com/maps/api/timezone/json?location=%s&sensor=false&timestamp=%s' % (latlng, time.time())
+        url = 'https://maps.googleapis.com/maps/api/timezone/json?location=%s&sensor=false&timestamp=%s&key=%s' % (latlng, time.time(), api_key)
 
         # try and fetch url
         try:
